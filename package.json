@@ -23,5 +23,8 @@
   "homepage": "https://github.com/Robertosousa86/course-tdd#readme",
   "devDependencies": {
     "eslint": "^7.31.0"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
   }
 }
