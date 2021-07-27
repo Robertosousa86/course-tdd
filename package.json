@@ -28,6 +28,7 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^3.4.0",
     "jest": "^27.0.6",
+    "nodemon": "^2.0.12",
     "prettier": "^2.3.2"
   },
   "dependencies": {
@@ -51,11 +52,11 @@
       "jest": true
     },
     "rules": {
-      "prettier/prettier" : "warn",
-      "eqeqeq" : "warn"
+      "prettier/prettier": "warn",
+      "eqeqeq": "warn"
     }
   },
-  "prettier" : {
+  "prettier": {
     "singleQuote": true,
     "printWidth": 120
   }
