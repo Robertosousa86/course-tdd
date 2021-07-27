@@ -1,0 +1,24 @@
+{
+  "name": "express-ws",
+  "version": "1.0.0",
+  "description": "tdd with express",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Robertosousa86/course-tdd.git"
+  },
+  "keywords": [
+    "tdd",
+    "express",
+    "node"
+  ],
+  "author": "Roberto Sousa",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Robertosousa86/course-tdd/issues"
+  },
+  "homepage": "https://github.com/Robertosousa86/course-tdd#readme"
+}
