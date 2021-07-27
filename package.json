@@ -4,6 +4,7 @@
   "description": "tdd with express",
   "main": "app.js",
   "scripts": {
+    "lint": "eslint .",
     "start": "node app",
     "test": "jest --watch"
   },
@@ -24,10 +25,38 @@
   "homepage": "https://github.com/Robertosousa86/course-tdd#readme",
   "devDependencies": {
     "eslint": "^7.31.0",
-    "jest": "^27.0.6"
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "jest": "^27.0.6",
+    "prettier": "^2.3.2"
   },
   "dependencies": {
     "express": "^4.17.1",
     "supertest": "^6.1.4"
+  },
+  "eslintConfig": {
+    "parserOptions": {
+      "ecmaVersion": 6
+    },
+    "extends": [
+      "eslint:recommended",
+      "plugin:prettier/recommended"
+    ],
+    "plugins": [
+      "prettier"
+    ],
+    "env": {
+      "node": true,
+      "es6": true,
+      "jest": true
+    },
+    "rules": {
+      "prettier/prettier" : "warn",
+      "eqeqeq" : "warn"
+    }
+  },
+  "prettier" : {
+    "singleQuote": true,
+    "printWidth": 120
   }
 }
