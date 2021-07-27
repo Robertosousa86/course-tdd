@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/Robertosousa86/course-tdd/issues"
   },
-  "homepage": "https://github.com/Robertosousa86/course-tdd#readme"
+  "homepage": "https://github.com/Robertosousa86/course-tdd#readme",
+  "devDependencies": {
+    "eslint": "^7.31.0"
+  }
 }
