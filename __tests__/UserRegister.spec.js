@@ -1,7 +1,7 @@
 const app = require('../app');
 const request = require('supertest');
 
-it('should be returns 200 OK when singup request is valid', () => {
+it('should be returns 200 OK when singup request is valid', (done) => {
   request(app)
     .post('/api/1.0/users')
     .send({
@@ -9,5 +9,8 @@ it('should be returns 200 OK when singup request is valid', () => {
       email: 'user1@mail.com',
       password: 'P4ssword',
     })
-    .expect(200);
+    .then((res) => {
+      expect(res.status).toBe(200);
+      done();
+    });
 });
