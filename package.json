@@ -33,6 +33,8 @@
   },
   "dependencies": {
     "express": "^4.17.1",
+    "sequelize": "^6.6.5",
+    "sqlite3": "^5.0.2",
     "supertest": "^6.1.4"
   },
   "eslintConfig": {
