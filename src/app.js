@@ -1,6 +1,8 @@
 const express = require('express');
 const User = require('./user/User');
 const app = express();
+// http://expressjs.com/pt-br/api.html#express.json
+app.use(express.json());
 
 app.post('/api/1.0/users', (req, res) => {
   User.create(req.body).then(() => {
