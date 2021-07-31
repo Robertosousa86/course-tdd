@@ -8,7 +8,7 @@ app.use(express.json());
 
 app.post('/api/1.0/users', (req, res) => {
   bcrypt.hash(req.body.password, 10).then((hash) => {
-    const user = Object.assign({}, req.body, { password: hash });
+    const user = { ...req.body, password: hash };
     User.create(user).then(() => {
       return res.send({ message: 'User created.' });
     });
