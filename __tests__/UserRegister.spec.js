@@ -44,7 +44,7 @@ describe('User Registration', () => {
       });
   });
 
-  it('should be saves user to  database', (done) => {
+  it('should be saves user to database', (done) => {
     request(app)
       .post('/api/1.0/users')
       .send({
