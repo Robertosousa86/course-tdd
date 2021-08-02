@@ -16,85 +16,58 @@ beforeEach(() => {
 });
 
 describe('User Registration', () => {
+  const postValidUser = () => {
+    return request(app).post('/api/1.0/users').send({
+      username: 'user1',
+      email: 'user1@mail.com',
+      password: 'P4ssword',
+    });
+  };
+
   it('should be returns 200 OK when singup request is valid', (done) => {
-    request(app)
-      .post('/api/1.0/users')
-      .send({
-        username: 'user1',
-        email: 'user1@mail.com',
-        password: 'P4ssword',
-      })
-      .then((res) => {
-        expect(res.status).toBe(200);
-        done();
-      });
+    postValidUser().then((res) => {
+      expect(res.status).toBe(200);
+      done();
+    });
   });
 
   it('should be returns sucess message when singup request is valid', (done) => {
-    request(app)
-      .post('/api/1.0/users')
-      .send({
-        username: 'user1',
-        email: 'user1@mail.com',
-        password: 'P4ssword',
-      })
-      .then((res) => {
-        expect(res.body.message).toBe('User created.');
-        done();
-      });
+    postValidUser().then((res) => {
+      expect(res.body.message).toBe('User created.');
+      done();
+    });
   });
 
   it('should be saves user to database', (done) => {
-    request(app)
-      .post('/api/1.0/users')
-      .send({
-        username: 'user1',
-        email: 'user1@mail.com',
-        password: 'P4ssword',
-      })
-      .then(() => {
-        // Query user
-        User.findAll().then((userList) => {
-          expect(userList.length).toBe(1);
-          done();
-        });
+    postValidUser().then(() => {
+      // Query user
+      User.findAll().then((userList) => {
+        expect(userList.length).toBe(1);
+        done();
       });
+    });
   });
 
   it('should be saves the username and email to database', (done) => {
-    request(app)
-      .post('/api/1.0/users')
-      .send({
-        username: 'user1',
-        email: 'user1@gmail.com',
-        password: 'P4ssword',
-      })
-      .then(() => {
-        // Query user
-        User.findAll().then((userList) => {
-          const savedUser = userList[0];
-          expect(savedUser.username).toBe('user1');
-          expect(savedUser.email).toBe('user1@gmail.com');
-          done();
-        });
+    postValidUser().then(() => {
+      // Query user
+      User.findAll().then((userList) => {
+        const savedUser = userList[0];
+        expect(savedUser.username).toBe('user1');
+        expect(savedUser.email).toBe('user1@mail.com');
+        done();
       });
+    });
   });
 
   it('should be hashes the password', (done) => {
-    request(app)
-      .post('/api/1.0/users')
-      .send({
-        username: 'user1',
-        email: 'user1@gmail.com',
-        password: 'P4ssword',
-      })
-      .then(() => {
-        // Query user
-        User.findAll().then((userList) => {
-          const savedUser = userList[0];
-          expect(savedUser.password).not.toBe('P4ssword');
-          done();
-        });
+    postValidUser().then(() => {
+      // Query user
+      User.findAll().then((userList) => {
+        const savedUser = userList[0];
+        expect(savedUser.password).not.toBe('P4ssword');
+        done();
       });
+    });
   });
 });
