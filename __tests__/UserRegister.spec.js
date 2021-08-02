@@ -24,50 +24,36 @@ describe('User Registration', () => {
     });
   };
 
-  it('should be returns 200 OK when singup request is valid', (done) => {
-    postValidUser().then((res) => {
-      expect(res.status).toBe(200);
-      done();
-    });
+  it('should be returns 200 OK when singup request is valid', async () => {
+    const response = await postValidUser();
+    expect(response.status).toBe(200);
   });
 
-  it('should be returns sucess message when singup request is valid', (done) => {
-    postValidUser().then((res) => {
-      expect(res.body.message).toBe('User created.');
-      done();
-    });
+  it('should be returns sucess message when singup request is valid', async () => {
+    const response = await postValidUser();
+    expect(response.body.message).toBe('User created.');
   });
 
-  it('should be saves user to database', (done) => {
-    postValidUser().then(() => {
-      // Query user
-      User.findAll().then((userList) => {
-        expect(userList.length).toBe(1);
-        done();
-      });
-    });
+  it('should be saves user to database', async () => {
+    await postValidUser();
+    // Query user
+    const userList = await User.findAll();
+    expect(userList.length).toBe(1);
   });
 
-  it('should be saves the username and email to database', (done) => {
-    postValidUser().then(() => {
-      // Query user
-      User.findAll().then((userList) => {
-        const savedUser = userList[0];
-        expect(savedUser.username).toBe('user1');
-        expect(savedUser.email).toBe('user1@mail.com');
-        done();
-      });
-    });
+  it('should be saves the username and email to database', async () => {
+    await postValidUser();
+    // Query user
+    const userList = await User.findAll();
+    const savedUser = userList[0];
+    expect(savedUser.username).toBe('user1');
+    expect(savedUser.email).toBe('user1@mail.com');
   });
 
-  it('should be hashes the password', (done) => {
-    postValidUser().then(() => {
-      // Query user
-      User.findAll().then((userList) => {
-        const savedUser = userList[0];
-        expect(savedUser.password).not.toBe('P4ssword');
-        done();
-      });
-    });
+  it('should be hashes the password', async () => {
+    await postValidUser();
+    const userList = await User.findAll();
+    const savedUser = userList[0];
+    expect(savedUser.password).not.toBe('P4ssword');
   });
 });
