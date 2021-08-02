@@ -1,6 +1,6 @@
 # course-tdd
 
-## Sobre o curso
+## Sobre o curso:
 
 In this course we will be building a fully functional backend service with express js. we will call our application as hoaxify.
 
