@@ -9,7 +9,7 @@ router.post('/api/1.0/users', async (req, res) => {
   if (user.username === null)
     return res.status(400).send({
       validationErrors: {
-        username: 'User name cannot be null',
+        username: 'Username cannot be null',
       },
     });
 
