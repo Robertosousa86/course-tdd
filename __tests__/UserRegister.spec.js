@@ -60,7 +60,7 @@ describe('User Registration', () => {
   });
 
   it('should be return 400 when username is null', async () => {
-    const response = await request(app).post('/api/1.0/users').send({
+    const response = await postUser({
       username: null,
       email: 'user1@mail.com',
       password: 'P4ssword',
