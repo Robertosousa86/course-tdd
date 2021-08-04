@@ -15,34 +15,36 @@ beforeEach(() => {
   return User.destroy({ truncate: true });
 });
 
-describe('User Registration', () => {
-  const postValidUser = () => {
-    return request(app).post('/api/1.0/users').send({
-      username: 'user1',
-      email: 'user1@mail.com',
-      password: 'P4ssword',
-    });
-  };
+const validUser = {
+  username: 'user1',
+  email: 'user1@mail.com',
+  password: 'P4ssword',
+};
 
+const postUser = (user = validUser) => {
+  return request(app).post('/api/1.0/users').send(user);
+};
+
+describe('User Registration', () => {
   it('should be returns 200 OK when singup request is valid', async () => {
-    const response = await postValidUser();
+    const response = await postUser();
     expect(response.status).toBe(200);
   });
 
   it('should be returns sucess message when singup request is valid', async () => {
-    const response = await postValidUser();
+    const response = await postUser();
     expect(response.body.message).toBe('User created.');
   });
 
   it('should be saves user to database', async () => {
-    await postValidUser();
+    await postUser();
     // Query user
     const userList = await User.findAll();
     expect(userList.length).toBe(1);
   });
 
   it('should be saves the username and email to database', async () => {
-    await postValidUser();
+    await postUser();
     // Query user
     const userList = await User.findAll();
     const savedUser = userList[0];
@@ -51,7 +53,7 @@ describe('User Registration', () => {
   });
 
   it('should be hashes the password', async () => {
-    await postValidUser();
+    await postUser();
     const userList = await User.findAll();
     const savedUser = userList[0];
     expect(savedUser.password).not.toBe('P4ssword');
