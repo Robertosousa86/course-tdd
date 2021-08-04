@@ -85,6 +85,6 @@ describe('User Registration', () => {
       password: 'P4ssword',
     });
     const body = response.body;
-    expect(body.validationErrors.username).toBe('User name cannot be null');
+    expect(body.validationErrors.username).toBe('Username cannot be null');
   });
 });
