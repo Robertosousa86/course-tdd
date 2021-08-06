@@ -36,6 +36,7 @@
     "bcrypt": "^5.0.1",
     "config": "^3.3.6",
     "express": "^4.17.1",
+    "express-validator": "^6.12.1",
     "sequelize": "^6.6.5",
     "sqlite3": "^5.0.2",
     "supertest": "^6.1.4"
