@@ -89,17 +89,17 @@ describe('User Registration', () => {
   });
 
   it.each`
-    field         | expectedMessage
-    ${'username'} | ${'Username cannot be null'}
-    ${'email'}    | ${'E-mail cannot be null'}
-    ${'password'} | ${'Password cannot be null'}
-  `('should be returns $expectedMessage when $field is null', async ({ field, expectedMessage }) => {
+    field         | value   | expectedMessage
+    ${'username'} | ${null} | ${'Username cannot be null'}
+    ${'email'}    | ${null} | ${'E-mail cannot be null'}
+    ${'password'} | ${null} | ${'Password cannot be null'}
+  `('should be returns $expectedMessage when $field is $value', async ({ field, value, expectedMessage }) => {
     const user = {
       username: 'user1',
       email: 'user1@mail.com',
       password: 'P4ssword',
     };
-    user[field] = null;
+    user[field] = value;
     const response = await postUser(user);
     const body = response.body;
     expect(body.validationErrors[field]).toBe(expectedMessage);
