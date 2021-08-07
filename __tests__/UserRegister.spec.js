@@ -98,6 +98,7 @@ describe('User Registration', () => {
     ${'email'}    | ${'user.mail.com'} | ${'E-mail is not valid'}
     ${'email'}    | ${'user@mail'}     | ${'E-mail is not valid'}
     ${'password'} | ${null}            | ${'Password cannot be null'}
+    ${'password'} | ${'P4ss'}          | ${'Password must be at least 6 characters'}
   `('should be returns $expectedMessage when $field is $value', async ({ field, value, expectedMessage }) => {
     const user = {
       username: 'user1',
