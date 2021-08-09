@@ -31,8 +31,12 @@ router.post(
       });
       return res.status(400).send({ validationErrors: validationErrors });
     }
-    await UserService.save(req.body);
-    return res.send({ message: 'User created.' });
+    try {
+      await UserService.save(req.body);
+      return res.send({ message: 'User created.' });
+    } catch (err) {
+      return res.status(400).send({ validationErrors: { email: 'E-mail in use' } });
+    }
   }
 );
 
