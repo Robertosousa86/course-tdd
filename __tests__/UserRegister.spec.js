@@ -2,6 +2,7 @@ const app = require('../src/app');
 const request = require('supertest');
 const User = require('../src/user/User');
 const sequelize = require('../src/config/database');
+
 /*
  * Run a function before any of the tests in this file run.
  * If the function returns a promise or is a generator,
@@ -111,7 +112,7 @@ describe('User Registration', () => {
     ${'password'} | ${'alllowercase'}         | ${password_pattern}
     ${'password'} | ${'ALLUPPERCASE'}         | ${password_pattern}
     ${'password'} | ${'123456'}               | ${password_pattern}
-    ${'password'} | ${'alllowercaseaNDUPPER'} | ${password_pattern}
+    ${'password'} | ${'alllowercaseANDUPPER'} | ${password_pattern}
   `('should be returns $expectedMessage when $field is $value', async ({ field, value, expectedMessage }) => {
     const user = {
       username: 'user1',
@@ -141,3 +142,5 @@ describe('User Registration', () => {
     expect(Object.keys(body.validationErrors)).toEqual(['username', 'email']);
   });
 });
+
+describe('Internationalization', () => {});
