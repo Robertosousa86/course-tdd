@@ -143,4 +143,53 @@ describe('User Registration', () => {
   });
 });
 
-describe('Internationalization', () => {});
+describe('Internationalization', () => {
+  const postUser = (user = validUser) => {
+    return request(app).post('/api/1.0/users').set('Accept-Language', 'pt-br').send(user);
+  };
+
+  const username_null = 'Nome do usuário não pode nulo';
+  const username_size = 'Deve conter no mínimo 4 e no máximo 32 caracteres';
+  const email_null = 'E-mail não pode ser nulo';
+  const email_invalid = 'E-mail não é valido';
+  const email_inuse = 'E-mail em uso';
+  const password_null = 'Senha não pode ser nula';
+  const password_size = 'Senha deve ter no mínimo 6 caracteres';
+  const password_pattern = 'A senha deve conter 1 ao menos 1 letra maiúscula, 1 letra minúscula e 1 número';
+
+  it.each`
+    field         | value                     | expectedMessage
+    ${'username'} | ${null}                   | ${username_null}
+    ${'username'} | ${'usr'}                  | ${username_size}
+    ${'username'} | ${'a'.repeat(33)}         | ${username_size}
+    ${'email'}    | ${null}                   | ${email_null}
+    ${'email'}    | ${'mail.com'}             | ${email_invalid}
+    ${'email'}    | ${'user.mail.com'}        | ${email_invalid}
+    ${'email'}    | ${'user@mail'}            | ${email_invalid}
+    ${'password'} | ${null}                   | ${password_null}
+    ${'password'} | ${'P4ss'}                 | ${password_size}
+    ${'password'} | ${'alllowercase'}         | ${password_pattern}
+    ${'password'} | ${'ALLUPPERCASE'}         | ${password_pattern}
+    ${'password'} | ${'123456'}               | ${password_pattern}
+    ${'password'} | ${'alllowercaseANDUPPER'} | ${password_pattern}
+  `(
+    'should be returns $expectedMessage when $field and language is set to Brazlian Portuguese is $value',
+    async ({ field, value, expectedMessage }) => {
+      const user = {
+        username: 'user1',
+        email: 'user1@mail.com',
+        password: 'P4ssword',
+      };
+      user[field] = value;
+      const response = await postUser(user);
+      const body = response.body;
+      expect(body.validationErrors[field]).toBe(expectedMessage);
+    }
+  );
+
+  it(`should returns ${email_inuse} when same email is already use when language is Brazilian Portuguese`, async () => {
+    await User.create({ ...validUser });
+    const response = await postUser();
+    expect(response.body.validationErrors.email).toBe(`${email_inuse}`);
+  });
+});
