@@ -10,6 +10,7 @@ i18next
   .init({
     fallbackLng: 'en',
     lng: 'en',
+    ns: ['translation'],
     defaultNS: 'translation',
     backend: {
       loadPath: './locales/{{lng}}/{{ns}}.json',
@@ -23,7 +24,6 @@ const app = express();
 
 app.use(middleware.handle(i18next));
 
-// http://expressjs.com/pt-br/api.html#express.json
 app.use(express.json());
 
 app.use(UserRouter);

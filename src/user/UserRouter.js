@@ -28,17 +28,15 @@ router.post(
     .withMessage('password_null')
     .bail()
     .isLength({ min: 6 })
-    .withMessage('Password_size')
+    .withMessage('password_size')
     .bail()
     .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).*$/)
-    .withMessage('password-pattern'),
+    .withMessage('password_pattern'),
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       const validationErrors = {};
-      errors.array().forEach((error) => {
-        validationErrors[error.param] = error.msg;
-      });
+      errors.array().forEach((error) => (validationErrors[error.param] = req.t(error.msg)));
       return res.status(400).send({ validationErrors: validationErrors });
     }
     await UserService.save(req.body);

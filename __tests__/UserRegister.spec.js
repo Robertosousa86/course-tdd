@@ -128,7 +128,7 @@ describe('User Registration', () => {
   it(`should returns ${email_inuse} when same email is already use`, async () => {
     await User.create({ ...validUser });
     const response = await postUser();
-    expect(response.body.validationErrors.email).toBe(`${email_inuse}`);
+    expect(response.body.validationErrors.email).toBe(email_inuse);
   });
 
   it('should be returns errors for both username is null and email is in user', async () => {
@@ -155,7 +155,7 @@ describe('Internationalization', () => {
   const email_inuse = 'E-mail em uso';
   const password_null = 'Senha não pode ser nula';
   const password_size = 'Senha deve ter no mínimo 6 caracteres';
-  const password_pattern = 'A senha deve conter 1 ao menos 1 letra maiúscula, 1 letra minúscula e 1 número';
+  const password_pattern = 'A senha deve conter ao menos 1 letra maiúscula, 1 letra minúscula e 1 número';
 
   it.each`
     field         | value                     | expectedMessage
