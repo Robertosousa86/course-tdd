@@ -145,7 +145,7 @@ describe('User Registration', () => {
 
 describe('Internationalization', () => {
   const postUser = (user = validUser) => {
-    return request(app).post('/api/1.0/users').set('Accept-Language', 'pt-br').send(user);
+    return request(app).post('/api/1.0/users').set('Accept-Language', 'pt-Br').send(user);
   };
 
   const username_null = 'Nome do usuário não pode nulo';
@@ -173,7 +173,7 @@ describe('Internationalization', () => {
     ${'password'} | ${'123456'}               | ${password_pattern}
     ${'password'} | ${'alllowercaseANDUPPER'} | ${password_pattern}
   `(
-    'should be returns $expectedMessage when $field and language is set to Brazlian Portuguese is $value',
+    'should be returns $expectedMessage when $field and language is set to Brazilian Portuguese is $value',
     async ({ field, value, expectedMessage }) => {
       const user = {
         username: 'user1',
@@ -190,6 +190,6 @@ describe('Internationalization', () => {
   it(`should returns ${email_inuse} when same email is already use when language is Brazilian Portuguese`, async () => {
     await User.create({ ...validUser });
     const response = await postUser();
-    expect(response.body.validationErrors.email).toBe(`${email_inuse}`);
+    expect(response.body.validationErrors.email).toBe(email_inuse);
   });
 });
