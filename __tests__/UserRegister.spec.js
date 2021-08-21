@@ -149,6 +149,7 @@ describe('User Registration', () => {
 describe('Internationalization', () => {
   const username_null = 'Nome do usuário não pode nulo';
   const username_size = 'Deve conter no mínimo 4 e no máximo 32 caracteres';
+  const user_create_success = 'Usuário criado com sucesso';
   const email_null = 'E-mail não pode ser nulo';
   const email_invalid = 'E-mail não é valido';
   const email_inuse = 'E-mail em uso';
@@ -190,5 +191,10 @@ describe('Internationalization', () => {
     await User.create({ ...validUser });
     const response = await postUser({ ...validUser }, { language: 'pt-BR' });
     expect(response.body.validationErrors.email).toBe(email_inuse);
+  });
+
+  it(`should be returns ${user_create_success} when singup request is valid and language is Brazilian Portuguese`, async () => {
+    const response = await postUser({ ...validUser }, { language: 'pt-BR' });
+    expect(response.body.message).toBe(user_create_success);
   });
 });
