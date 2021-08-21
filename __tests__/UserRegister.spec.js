@@ -24,9 +24,7 @@ const validUser = {
 
 const postUser = (user = validUser, options = {}) => {
   const agent = request(app).post('/api/1.0/users');
-  if (options.language) {
-    agent.set('Accept-Language', options.language);
-  }
+  if (options.language) agent.set('Accept-Language', options.language);
 
   return agent.send(user);
 };
