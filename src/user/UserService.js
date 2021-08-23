@@ -10,7 +10,7 @@ const generateToken = (length) => {
 const save = async (body) => {
   const { username, email, password } = body;
   const hash = await bcrypt.hash(password, 10);
-  const user = { username: username, email: email, password: hash };
+  const user = { username: username, email: email, password: hash, activationToken: generateToken(16) };
   await User.create(user);
 };
 
