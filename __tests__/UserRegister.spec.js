@@ -92,6 +92,13 @@ describe('User Registration', () => {
     expect(Object.keys(body.validationErrors)).toEqual(['username', 'email']);
   });
 
+  it('should be creates user in inactive mode', async () => {
+    await postUser();
+    const users = await User.findAll();
+    const savedUser = users[0];
+    expect(savedUser.inactive).toBe(true);
+  });
+
   const username_null = 'Username cannot be null';
   const username_size = 'Must have min 4 and max 32 characters';
   const email_null = 'E-mail cannot be null';
