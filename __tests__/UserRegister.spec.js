@@ -93,6 +93,14 @@ describe('User Registration', () => {
   });
 
   it('should be creates user in inactive mode', async () => {
+    const newUser = { ...validUser, inactive: false };
+    await postUser(newUser);
+    const users = await User.findAll();
+    const savedUser = users[0];
+    expect(savedUser.inactive).toBe(true);
+  });
+
+  it('should be creates user in inactive mode even the request body contains inactive as false', async () => {
     await postUser();
     const users = await User.findAll();
     const savedUser = users[0];
