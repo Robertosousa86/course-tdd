@@ -107,6 +107,14 @@ describe('User Registration', () => {
     expect(savedUser.inactive).toBe(true);
   });
 
+  it('should be creates an activationToken for user', async () => {
+    const newUser = { ...validUser, inactive: false };
+    await postUser(newUser);
+    const users = await User.findAll();
+    const savedUser = users[0];
+    expect(savedUser.activationToken).toBeTruthy();
+  });
+
   const username_null = 'Username cannot be null';
   const username_size = 'Must have min 4 and max 32 characters';
   const email_null = 'E-mail cannot be null';
