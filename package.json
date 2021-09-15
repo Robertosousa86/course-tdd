@@ -40,6 +40,7 @@
     "i18next": "^20.4.0",
     "i18next-fs-backend": "^1.1.1",
     "i18next-http-middleware": "^3.1.4",
+    "nodemailer": "^6.6.3",
     "sequelize": "^6.6.5",
     "sqlite3": "^5.0.2",
     "supertest": "^6.1.4"
