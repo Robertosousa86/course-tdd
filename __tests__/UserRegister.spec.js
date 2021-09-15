@@ -114,15 +114,15 @@ describe('User Registration', () => {
     const users = await User.findAll();
     const savedUser = users[0];
     expect(savedUser.activationToken).toBeTruthy();
+  });
 
-    it('should sends Account activation email with activationToken', async () => {
-      await postUser();
-      const lastMail = nodemailerStub.interactsWithMail.lastMail();
-      expect(lastMail.to[0]).toBe('user1@mail.com');
-      const users = await User.findAll();
-      const savedUser = users[0];
-      expect(lastMail.content).toContain(savedUser.activationToken);
-    });
+  it('should sends Account activation email with activationToken', async () => {
+    await postUser();
+    const lastMail = nodemailerStub.interactsWithMail.lastMail();
+    expect(lastMail.to[0]).toBe('user1@mail.com');
+    const users = await User.findAll();
+    const savedUser = users[0];
+    expect(lastMail.content).toContain(savedUser.activationToken);
   });
 
   const username_null = 'Username cannot be null';
