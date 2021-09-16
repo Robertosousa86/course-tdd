@@ -7,5 +7,6 @@
   "password_null": "Senha não pode ser nula",
   "password_size": "Senha deve ter no mínimo 6 caracteres",
   "password_pattern": "A senha deve conter ao menos 1 letra maiúscula, 1 letra minúscula e 1 número",
-  "user_create_success": "Usuário criado com sucesso"
+  "user_create_success": "Usuário criado com sucesso",
+  "email_failure": "Falha ao enviar E-mail"
 }
