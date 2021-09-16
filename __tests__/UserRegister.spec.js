@@ -208,6 +208,7 @@ describe('Internationalization', () => {
   const password_null = 'Senha não pode ser nula';
   const password_size = 'Senha deve ter no mínimo 6 caracteres';
   const password_pattern = 'A senha deve conter ao menos 1 letra maiúscula, 1 letra minúscula e 1 número';
+  const email_failure = 'Falha ao enviar E-mail';
 
   it.each`
     field         | value                     | expectedMessage
@@ -248,5 +249,14 @@ describe('Internationalization', () => {
   it(`should be returns ${user_create_success} when singup request is valid and language is Brazilian Portuguese`, async () => {
     const response = await postUser({ ...validUser }, { language: 'pt-BR' });
     expect(response.body.message).toBe(user_create_success);
+  });
+
+  it(`should be returns ${email_failure} message when sending email fails and language set is Brazilian Portuguese`, async () => {
+    const mockSendAccountActivation = jest
+      .spyOn(EmailService, 'sendAccountActivation')
+      .mockRejectedValue({ message: 'Failed to deliver email' });
+    const response = await postUser({ ...validUser }, { language: 'pt-BR' });
+    mockSendAccountActivation.mockRestore();
+    expect(response.body.message).toBe(email_failure);
   });
 });
