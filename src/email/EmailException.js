@@ -1,3 +1,3 @@
 module.exports = function EmailException() {
-  this.message = 'email_failre';
+  this.message = 'email_failure';
 };
