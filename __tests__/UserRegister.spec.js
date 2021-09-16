@@ -3,6 +3,7 @@ const request = require('supertest');
 const User = require('../src/user/User');
 const sequelize = require('../src/config/database');
 const nodemailerStub = require('nodemailer-stub');
+const EmailService = require('../src/email/EmailService');
 
 /*
  * Run a function before any of the tests in this file run.
@@ -123,6 +124,12 @@ describe('User Registration', () => {
     const users = await User.findAll();
     const savedUser = users[0];
     expect(lastMail.content).toContain(savedUser.activationToken);
+  });
+
+  it('should be returns 502 Bad Gateway when sending email fails', async () => {
+    jest.spyOn(EmailService, 'sendAccountActivation').mockRejectedValue({ message: 'Failed to deliver email' });
+    const response = await postUser();
+    expect(response.status).toBe(502);
   });
 
   const username_null = 'Username cannot be null';
