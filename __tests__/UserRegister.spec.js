@@ -127,9 +127,12 @@ describe('User Registration', () => {
   });
 
   it('should be returns 502 Bad Gateway when sending email fails', async () => {
-    jest.spyOn(EmailService, 'sendAccountActivation').mockRejectedValue({ message: 'Failed to deliver email' });
+    const mockSendAccountActivation = jest
+      .spyOn(EmailService, 'sendAccountActivation')
+      .mockRejectedValue({ message: 'Failed to deliver email' });
     const response = await postUser();
     expect(response.status).toBe(502);
+    mockSendAccountActivation.mockRestore();
   });
 
   const username_null = 'Username cannot be null';
