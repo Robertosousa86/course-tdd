@@ -144,6 +144,16 @@ describe('User Registration', () => {
     expect(response.body.message).toBe('E-mail Failure');
   });
 
+  it('should be does not save user to database if activation email fails', async () => {
+    const mockSendAccountActivation = jest
+      .spyOn(EmailService, 'sendAccountActivation')
+      .mockRejectedValue({ message: 'Failed to deliver email' });
+    await postUser();
+    mockSendAccountActivation.mockRestore();
+    const users = await User.findAll();
+    expect(users.length).toBe(0);
+  });
+
   const username_null = 'Username cannot be null';
   const username_size = 'Must have min 4 and max 32 characters';
   const email_null = 'E-mail cannot be null';
