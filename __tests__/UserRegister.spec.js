@@ -37,6 +37,10 @@ beforeEach(() => {
   return User.destroy({ truncate: true });
 });
 
+afterAll(async () => {
+  await server.close();
+});
+
 const validUser = {
   username: 'user1',
   email: 'user1@mail.com',
@@ -137,12 +141,7 @@ describe('User Registration', () => {
   });
 
   it('should sends Account activation email with activationToken', async () => {
-    await server.listen(8587, 'localhost');
-
     await postUser();
-
-    await server.close();
-
     const users = await User.findAll();
     const savedUser = users[0];
     expect(lastMail).toContain('user1@mail.com');
