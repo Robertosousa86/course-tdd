@@ -10,8 +10,27 @@ const SMTPServer = require('smtp-server').SMTPServer;
  * If the function returns a promise or is a generator,
  * Jest waits for that promise to solve before running tests.
  */
-beforeAll(() => {
-  return sequelize.sync();
+
+let lastMail, server;
+
+beforeAll(async () => {
+  server = new SMTPServer({
+    authOptional: true,
+    onData(stream, session, callback) {
+      let mailBody;
+      stream.on('data', (data) => {
+        mailBody += data.toString();
+      });
+      stream.on('end', () => {
+        lastMail = mailBody;
+        callback();
+      });
+    },
+  });
+
+  await server.listen(8587, 'localhost');
+
+  await sequelize.sync();
 });
 
 beforeEach(() => {
@@ -118,21 +137,6 @@ describe('User Registration', () => {
   });
 
   it('should sends Account activation email with activationToken', async () => {
-    let lastMail;
-    const server = new SMTPServer({
-      authOptional: true,
-      onData(stream, session, callback) {
-        let mailBody;
-        stream.on('data', (data) => {
-          mailBody += data.toString();
-        });
-        stream.on('end', () => {
-          lastMail = mailBody;
-          callback();
-        });
-      },
-    });
-
     await server.listen(8587, 'localhost');
 
     await postUser();
