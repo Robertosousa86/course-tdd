@@ -72,5 +72,9 @@
   "prettier": {
     "singleQuote": true,
     "printWidth": 120
-  }
+  },
+  "jest": [
+    "jest-watch-typeahead/filename",
+    "jest-watch-typeahead/testname"
+  ]
 }
