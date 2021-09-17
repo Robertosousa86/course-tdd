@@ -2,9 +2,9 @@ const app = require('../src/app');
 const request = require('supertest');
 const User = require('../src/user/User');
 const sequelize = require('../src/config/database');
-const nodemailerStub = require('nodemailer-stub');
+// const nodemailerStub = require('nodemailer-stub');
 const EmailService = require('../src/email/EmailService');
-
+const SMTPServer = require('smtp-server').SMTPServer;
 /*
  * Run a function before any of the tests in this file run.
  * If the function returns a promise or is a generator,
@@ -118,12 +118,31 @@ describe('User Registration', () => {
   });
 
   it('should sends Account activation email with activationToken', async () => {
+    let lastMail;
+    const server = new SMTPServer({
+      authOptional: true,
+      onData(stream, session, callback) {
+        let mailBody;
+        stream.on('data', (data) => {
+          mailBody += data.toString();
+        });
+        stream.on('end', () => {
+          lastMail = mailBody;
+          callback();
+        });
+      },
+    });
+
+    await server.listen(8587, 'localhost');
+
     await postUser();
-    const lastMail = nodemailerStub.interactsWithMail.lastMail();
-    expect(lastMail.to[0]).toBe('user1@mail.com');
+
+    await server.close();
+
     const users = await User.findAll();
     const savedUser = users[0];
-    expect(lastMail.content).toContain(savedUser.activationToken);
+    expect(lastMail).toContain('user1@mail.com');
+    expect(lastMail).toContain(savedUser.activationToken);
   });
 
   it('should be returns 502 Bad Gateway when sending email fails', async () => {
