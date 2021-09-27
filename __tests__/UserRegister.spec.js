@@ -285,3 +285,5 @@ describe('Internationalization', () => {
     expect(response.body.message).toBe(email_failure);
   });
 });
+
+describe('Account activation', () => {});
