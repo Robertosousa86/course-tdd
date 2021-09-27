@@ -299,7 +299,7 @@ describe('Account activation', () => {
     expect(users[0].inactive).toBe(false);
   });
 
-  it('should be removes the token from user table after sucefull activation', async () => {
+  it('should be removes the token from user table after succssefull activation', async () => {
     await postUser();
     let users = await User.findAll();
     const token = await users[0].activationToken;
