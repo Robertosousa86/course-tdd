@@ -286,4 +286,16 @@ describe('Internationalization', () => {
   });
 });
 
-describe('Account activation', () => {});
+describe('Account activation', () => {
+  it('should be activates the account when corret token is send', async () => {
+    await postUser();
+    let users = await User.findAll();
+    const token = await users[0].activationToken;
+
+    await request(app)
+      .post('/api/1.0/users/token/' + token)
+      .send();
+    users = await User.findAll();
+    expect(users[0].inactive).toBe(false);
+  });
+});
