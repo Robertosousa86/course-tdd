@@ -298,4 +298,16 @@ describe('Account activation', () => {
     users = await User.findAll();
     expect(users[0].inactive).toBe(false);
   });
+
+  it('should be removes the token from user table after sucefull activation', async () => {
+    await postUser();
+    let users = await User.findAll();
+    const token = await users[0].activationToken;
+
+    await request(app)
+      .post('/api/1.0/users/token/' + token)
+      .send();
+    users = await User.findAll();
+    expect(users[0].activationToken).toBeFalsy();
+  });
 });
