@@ -8,5 +8,6 @@
   "password_size": "Senha deve ter no mínimo 6 caracteres",
   "password_pattern": "A senha deve conter ao menos 1 letra maiúscula, 1 letra minúscula e 1 número",
   "user_create_success": "Usuário criado com sucesso",
-  "email_failure": "Falha ao enviar E-mail"
+  "email_failure": "Falha ao enviar E-mail",
+  "account_activation_failure": "Esta conta já está ativa ou o token é inválido"
 }

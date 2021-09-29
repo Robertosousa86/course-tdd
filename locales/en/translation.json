@@ -8,5 +8,6 @@
   "password_size": "Password must be at least 6 characters",
   "password_pattern": "Password must have at least 1 uppercase, 1 lowercase letter and 1 number",
   "user_create_success": "User created.",
-  "email_failure": "E-mail Failure"
+  "email_failure": "E-mail Failure",
+  "account_activation_failure": "This account either active or the token is invalid"
 }
