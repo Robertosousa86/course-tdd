@@ -1,3 +1,3 @@
 module.exports = function InvalidTokenException() {
-  this.message = '';
+  this.message = 'account_activation_failure';
 };
