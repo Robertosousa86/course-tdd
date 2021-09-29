@@ -321,4 +321,14 @@ describe('Account activation', () => {
     const users = await User.findAll();
     expect(users[0].inactive).toBe(true);
   });
+
+  it('should be return bad request when token is wrong', async () => {
+    await postUser();
+    const token = 'This-token-does-not-exist';
+
+    const response = await request(app)
+      .post('/api/1.0/users/token/' + token)
+      .send();
+    expect(response.status).toBe(400);
+  });
 });
