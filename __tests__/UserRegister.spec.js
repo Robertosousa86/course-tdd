@@ -339,13 +339,13 @@ describe('Account activation', () => {
     ${'pt-BR'} | ${'correct'} | ${'Conta esta ativada'}
     ${'en'}    | ${'correct'} | ${'Account is activated'}
   `(
-    'should be returns $message when token $tokenStatus and language is $language',
+    'should be returns $message when token is $tokenStatus and language is $language',
     async ({ language, tokenStatus, message }) => {
       await postUser();
       let token = 'This-token-does-not-exist';
       if (tokenStatus === 'correct') {
         let users = await User.findAll();
-        token = await users[0].activationToken;
+        token = users[0].activationToken;
       }
 
       const response = await request(app)
