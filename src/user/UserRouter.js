@@ -53,7 +53,7 @@ router.post('/api/1.0/users/token/:token', async (req, res) => {
   try {
     await UserService.activate(token);
   } catch (err) {
-    res.status(400).send();
+    res.status(400).send({ message: req.t(err.message) });
   }
   res.send();
 });
