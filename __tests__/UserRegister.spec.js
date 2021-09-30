@@ -333,17 +333,26 @@ describe('Account activation', () => {
   });
 
   it.each`
-    language   | message
-    ${'pt-BR'} | ${'Esta conta já está ativa ou o token é inválido'}
-    ${'en'}    | ${'This account either active or the token is invalid'}
-  `('should be returns $message when wrong token is sent and language is $language', async ({ language, message }) => {
-    await postUser();
-    const token = 'This-token-does-not-exist';
+    language   | tokenStatus  | message
+    ${'pt-BR'} | ${'wrong'}   | ${'Esta conta já está ativa ou o token é inválido'}
+    ${'en'}    | ${'wrong'}   | ${'This account either active or the token is invalid'}
+    ${'pt-BR'} | ${'correct'} | ${'Conta esta ativada'}
+    ${'en'}    | ${'correct'} | ${'Account is activated'}
+  `(
+    'should be returns $message when token $tokenStatus and language is $language',
+    async ({ language, tokenStatus, message }) => {
+      await postUser();
+      let token = 'This-token-does-not-exist';
+      if (tokenStatus === 'correct') {
+        let users = await User.findAll();
+        token = await users[0].activationToken;
+      }
 
-    const response = await request(app)
-      .post('/api/1.0/users/token/' + token)
-      .set('Accept-Language', language)
-      .send();
-    expect(response.body.message).toBe(message);
-  });
+      const response = await request(app)
+        .post('/api/1.0/users/token/' + token)
+        .set('Accept-Language', language)
+        .send();
+      expect(response.body.message).toBe(message);
+    }
+  );
 });
